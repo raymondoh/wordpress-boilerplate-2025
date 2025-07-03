@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Compiled assets (optional, but good practice if you build on the server)
+# If you want to commit your compiled assets, remove the line below
+/assets
+
+# WordPress-specific files
+*.log
+.DS_Store
+Thumbs.db
