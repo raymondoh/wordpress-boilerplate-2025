@@ -83,3 +83,60 @@ class Your_Theme_Name_Walker_Nav_Menu extends Walker_Nav_Menu {
         // We also don't need anything here
     }
 }
+
+// In functions.php
+
+function wp_boilerplate_register_cpt_services() {
+    $labels = array(
+        'name'                  => _x( 'Services', 'Post type general name', 'wp-boilerplate' ),
+        'singular_name'         => _x( 'Service', 'Post type singular name', 'wp-boilerplate' ),
+        'menu_name'             => _x( 'Services', 'Admin Menu text', 'wp-boilerplate' ),
+        'add_new_item'          => __( 'Add New Service', 'wp-boilerplate' ),
+        'add_new'               => __( 'Add New', 'wp-boilerplate' ),
+    );
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'service' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 20, // Below 'Pages'
+        'supports'           => array( 'title', 'editor', 'thumbnail' ), // We will use the Featured Image for the icon
+        'menu_icon'          => 'dashicons-admin-tools',
+    );
+    register_post_type( 'service', $args );
+}
+add_action( 'init', 'wp_boilerplate_register_cpt_services' );
+
+// In functions.php
+
+function wp_boilerplate_register_cpt_testimonials() {
+    $labels = array(
+        'name'                  => _x( 'Testimonials', 'Post type general name', 'wp-boilerplate' ),
+        'singular_name'         => _x( 'Testimonial', 'Post type singular name', 'wp-boilerplate' ),
+        'menu_name'             => _x( 'Testimonials', 'Admin Menu text', 'wp-boilerplate' ),
+        'add_new_item'          => __( 'Add New Testimonial', 'wp-boilerplate' ),
+    );
+    $args = array(
+        'labels'             => $labels,
+        'public'             => false, // We don't need single pages for testimonials
+        'publicly_queryable' => false,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => false,
+        'rewrite'            => false,
+        'capability_type'    => 'post',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'menu_position'      => 21, // Below 'Services'
+        'supports'           => array( 'title', 'editor' ), // Title will be author name, editor will be the quote
+        'menu_icon'          => 'dashicons-format-quote',
+    );
+    register_post_type( 'testimonial', $args );
+}
+add_action( 'init', 'wp_boilerplate_register_cpt_testimonials' );

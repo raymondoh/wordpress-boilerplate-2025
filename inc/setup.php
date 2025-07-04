@@ -123,5 +123,14 @@ function wp_boilerplate_widgets_init() {
         'before_title' => '<h2 class="widget-title text-lg font-semibold mb-3">',
         'after_title' => '</h2>',
     ));
+    register_sidebar(array(
+        'name' => esc_html__('Footer 4', 'wp-boilerplate'),
+        'id' => 'footer-4',
+        'description' => esc_html__('Add widgets here.', 'wp-boilerplate'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s mb-4">',
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title text-lg font-semibold mb-3">',
+        'after_title' => '</h2>',
+    ));
 }
 add_action('widgets_init', 'wp_boilerplate_widgets_init');
