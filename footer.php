@@ -1,12 +1,9 @@
-<?php
-/**
- * The template for displaying the footer
- *
- * @package WP_Boilerplate
- */
-?>
+<footer class="site-footer container py-10">
+    <p class="text-sm text-gray-500">
+        &copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>
 
-</main><?php get_template_part('template-parts/components/site-footer'); ?>
+    </p>
+</footer>
 
 <?php wp_footer(); ?>
 </body>
