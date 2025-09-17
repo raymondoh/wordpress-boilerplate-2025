@@ -1,62 +1,62 @@
 <?php
 /**
- * Theme Setup
+ * Theme setup callbacks.
  *
- * Handles theme supports, menus, image sizes, and text domain.
- *
- * @package WordPress_Boilerplate
+ * @package WordPress_Boilerplate_2025
  */
 
-// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-/**
- * Theme setup callback.
- */
-function boilerplate_setup() {
-    // Make theme available for translation.
-    load_theme_textdomain( 'boilerplate', get_template_directory() . '/languages' );
+if ( ! function_exists( 'bp_theme_setup' ) ) {
+    /**
+     * Register theme supports and menus.
+     */
+    function bp_theme_setup() {
+        register_nav_menus(
+            array(
+                'primary' => __( 'Primary Menu', 'boilerplate' ),
+            )
+        );
 
-    // Add default posts and comments RSS feed links to head.
-    add_theme_support( 'automatic-feed-links' );
-
-    // Let WordPress manage the document title.
-    add_theme_support( 'title-tag' );
-
-    // Enable featured images.
-    add_theme_support( 'post-thumbnails' );
-
-    // Register navigation menus.
-    register_nav_menus( array(
-        'primary' => __( 'Primary Menu', 'boilerplate' ),
-    ) );
-
-    // Switch default core markup to valid HTML5.
-    add_theme_support( 'html5', array(
-        'search-form',
-        'comment-form',
-        'comment-list',
-        'gallery',
-        'caption',
-        'style',
-        'script',
-    ) );
-
-    // Support custom logo.
-    add_theme_support( 'custom-logo', array(
-        'height'      => 200,
-        'width'       => 200,
-        'flex-width'  => true,
-        'flex-height' => true,
-    ) );
-
-    // Add responsive embeds.
-    add_theme_support( 'responsive-embeds' );
-
-    // Example image sizes (adjust or remove if not needed).
-    add_image_size( 'card-thumb', 600, 400, true );
-    add_image_size( 'hero', 1600, 900, true );
+        add_theme_support( 'title-tag' );
+        add_theme_support( 'post-thumbnails' );
+        add_theme_support(
+            'html5',
+            array(
+                'comment-form',
+                'comment-list',
+                'gallery',
+                'caption',
+                'search-form',
+                'script',
+                'style',
+            )
+        );
+        add_theme_support(
+            'custom-logo',
+            array(
+                'height'      => 120,
+                'width'       => 400,
+                'flex-height' => true,
+                'flex-width'  => true,
+            )
+        );
+    }
 }
-add_action( 'after_setup_theme', 'boilerplate_setup' );
+add_action( 'after_setup_theme', 'bp_theme_setup' );
+
+if ( ! function_exists( 'bp_theme_body_class' ) ) {
+    /**
+     * Append a helper body class for the boilerplate.
+     *
+     * @param array $classes Body classes.
+     * @return array
+     */
+    function bp_theme_body_class( $classes ) {
+        $classes[] = 'bp-theme';
+        return $classes;
+    }
+}
+add_filter( 'body_class', 'bp_theme_body_class' );

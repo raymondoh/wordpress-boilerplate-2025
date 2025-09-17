@@ -1,96 +1,92 @@
 # WordPress Boilerplate Theme
 
-A lean, modern WordPress starter theme with **Tailwind CSS v4**, **esbuild**, and optional modules (Alpine.js, Fancybox, Swiper).
+A lean WordPress starter that pairs **Tailwind CSS v4**, **esbuild**, and clean PHP templates. It ships with a sticky header, mobile drawer navigation, and a modular hero layout you can toggle per project.
 
 ---
 
 ## 🚀 Quick Start
 
-1. Clone this theme into your WordPress `wp-content/themes/` directory.
+1. Copy or clone the theme into your WordPress installation under `wp-content/themes/`.
 2. Install dependencies:
    ```bash
    npm install
    ```
-3. Install dependencies:
+3. Start local builds while you work:
+   ```bash
    npm run watch
-4. Or build for production (minified):
+   ```
+   or compile a production build when you deploy:
+   ```bash
    npm run build
-5. Activate the theme in the WordPress admin, and you’re good to go.
+   ```
+4. Activate **WordPress Boilerplate 2025** in the WordPress admin.
 
-📦 Scripts
-npm install – install dependencies
+## 🧰 Build Commands
 
-npm run watch – watch and rebuild CSS/JS on changes
+| Command | Description |
+| ------- | ----------- |
+| `npm run watch` | Watches Tailwind (`src/css/tailwind.css`) and JavaScript (`src/js/main.js`) and rebuilds to `assets/css/main.css` and `assets/js/main.js`. |
+| `npm run build` | Runs one-off production builds for CSS and JS (minified, cache-friendly). |
 
-npm run build – one-time build (minified)
+## 🧭 Boilerplate Guide
 
-🗂 File Structure
-theme/
-├── style.css # Theme header + optional overrides
-├── functions.php # Boots theme, defines modules, pulls in inc/\*
-├── inc/
-│ ├── setup.php # Theme supports, menus, image sizes
-│ └── enqueue.php # Enqueues CSS/JS + optional modules
-├── assets/
-│ ├── css/main.css # Compiled Tailwind output
-│ └── js/main.js # Bundled JS output
-├── src/
-│ ├── css/tailwind.css # Tailwind entrypoint (@import "tailwindcss";)
-│ └── js/main.js # Theme JS entrypoint
-├── header.php # Calls wp_head()
-├── footer.php # Calls wp_footer()
-├── index.php # Default loop template
-└── front-page.php # Homepage template (optional)
-
-⚙️ Modules
-Modules are toggled in functions.php via $BP_MODULES:
-$BP_MODULES = array(
-'alpine' => false, // Alpine.js
-'fancybox' => false, // Fancybox (lightbox)
-'swiper' => false, // Swiper (sliders)
+### Optional modules
+Module toggles live in `functions.php` inside `$GLOBALS['BP_MODULES']`. Flip a module to `true` per project (or filter the array) to enqueue CDN assets:
+```php
+$GLOBALS['BP_MODULES'] = array(
+    'alpine'   => false,
+    'fancybox' => false,
+    'swiper'   => false,
 );
-Set to true to enqueue the CDN assets.
+```
 
-🎨 Styling
+### Mobile drawer navigation
+The sticky header renders a desktop menu plus the mobile toggle button (`#mobile-nav-toggle`) with open (`#icon-open`) and close (`#icon-close`) icons. The drawer itself lives in `template-parts/navigation-mobile.php` and is included directly after the header via `get_template_part('template-parts/navigation-mobile');`.
 
-Tailwind v4 is installed and configured.
+The hidden `<span>` inside `header.php` safelists the utility classes that the JavaScript toggles (`translate-x-*`, `opacity-*`, `pointer-events-*`, `overflow-hidden`). Keep that span (or add an equivalent) if you adjust the header so Tailwind does not purge those classes.
 
-Add global base styles, components, and utilities inside src/css/tailwind.css.
+### Hero section module
+A static hero scaffold is stored at `template-parts/hero/hero.php`. It is already referenced in `front-page.php`:
+```php
+get_template_part( 'template-parts/hero/hero' );
+```
+Swap the placeholder copy, wire it up to ACF, or add a slider script when you need it—no additional enqueueing is enabled by default.
 
-Run npm run build or npm run watch to recompile into assets/css/main.css.
+### Site Functionality plugin
+Project-specific logic (custom post types, taxonomies, ACF field groups) belongs in `wp-content/plugins/site-functionality/site-functionality.php`. The scaffold ships with commented examples so you can quickly uncomment or adapt them for each client site. Activate this plugin alongside the theme to keep presentation and functionality separate.
 
-✅ Requirements
+## 🗂 File Structure
 
-Node.js 18+
+```
+theme/
+├── style.css                      # Theme header
+├── functions.php                  # Boots the theme + module toggles
+├── inc/
+│   ├── setup.php                  # Theme supports and menus
+│   └── enqueue.php                # Enqueues CSS/JS + optional modules
+├── assets/
+│   ├── css/main.css               # Compiled Tailwind output (generated)
+│   └── js/main.js                 # Bundled JS output (generated)
+├── src/
+│   ├── css/tailwind.css           # Tailwind entrypoint
+│   └── js/
+│       ├── main.js                # Theme JS entrypoint (imports drawer)
+│       └── mobile-drawer.js       # Off-canvas navigation logic
+├── template-parts/
+│   ├── hero/hero.php              # Hero module scaffold
+│   └── navigation-mobile.php      # Mobile drawer markup
+├── front-page.php                 # Example home template including hero
+├── header.php / footer.php        # Layout chrome
+└── wp-content/plugins/
+    └── site-functionality/        # Project functionality plugin scaffold
+```
 
-WordPress 6.0+
+## 🎨 Styling
 
-PHP 7.4+
+Tailwind CSS v4 drives all styling. Edit `src/css/tailwind.css` to add global layers or utilities, then rebuild with `npm run watch` or `npm run build`.
 
-🆕 Creating a New Project
+## ✅ Requirements
 
-When starting a new site:
-
-1. Copy the boilerplate into wp-content/themes/your-theme-name.
-2. Update style.css header:
-
-Update style.css header:
-/_
-Theme Name: My Project Theme
-Author: Your Name
-Description: Custom theme for [Project Name].
-Version: 1.0.0
-Text Domain: my-project
-_/ 4. Edit functions.php → flip module toggles (alpine, fancybox, swiper) depending on what you need. 4. Install dependencies:
-npm install 5. Run the build:
-npm run watch
-
-6. Customize templates: duplicate/extend index.php into page.php, single.php, archive.php as needed.
-   7.Start coding 🚀
-
-📝 Notes
-This boilerplate is intentionally minimal: no Customizer, no widgets, no legacy clutter.
-
-Extend templates (page.php, single.php, archive.php, etc.) as needed per project.
-
-Compatible with child themes or direct extension.
+- Node.js 18+
+- WordPress 6.0+
+- PHP 7.4+
