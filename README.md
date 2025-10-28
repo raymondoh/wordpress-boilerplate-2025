@@ -1,6 +1,6 @@
 # WordPress Boilerplate Theme
 
-A lean WordPress starter that pairs **Tailwind CSS v4**, **esbuild**, and clean PHP templates. It ships with a sticky header, mobile drawer navigation, and a modular hero layout you can toggle per project.
+A lean WordPress starter that pairs **Tailwind CSS 3**, **esbuild**, and clean PHP templates. It ships with a sticky header, mobile drawer navigation, and a modular hero layout you can toggle per project.
 
 ---
 
@@ -30,16 +30,6 @@ A lean WordPress starter that pairs **Tailwind CSS v4**, **esbuild**, and clean 
 
 ## 🧭 Boilerplate Guide
 
-### Optional modules
-Module toggles live in `functions.php` inside `$GLOBALS['BP_MODULES']`. Flip a module to `true` per project (or filter the array) to enqueue CDN assets:
-```php
-$GLOBALS['BP_MODULES'] = array(
-    'alpine'   => false,
-    'fancybox' => false,
-    'swiper'   => false,
-);
-```
-
 ### Mobile drawer navigation
 The sticky header renders a desktop menu plus the mobile toggle button (`#mobile-nav-toggle`) with open (`#icon-open`) and close (`#icon-close`) icons. The drawer itself lives in `template-parts/navigation-mobile.php` and is included directly after the header via `get_template_part('template-parts/navigation-mobile');`.
 
@@ -59,14 +49,12 @@ Project-specific logic (custom post types, taxonomies, ACF field groups) belongs
 
 ```
 theme/
-├── style.css                      # Theme header
-├── functions.php                  # Boots the theme + module toggles
+├── style.css                      # Theme header + minimal baseline styles
+├── functions.php                  # Boots the theme and registers helpers
 ├── inc/
 │   ├── setup.php                  # Theme supports and menus
-│   └── enqueue.php                # Enqueues CSS/JS + optional modules
-├── assets/
-│   ├── css/main.css               # Compiled Tailwind output (generated)
-│   └── js/main.js                 # Bundled JS output (generated)
+│   └── enqueue.php                # Enqueues CSS/JS bundles
+├── assets/                        # Build output lives here (ignored)
 ├── src/
 │   ├── css/tailwind.css           # Tailwind entrypoint
 │   └── js/
@@ -83,7 +71,7 @@ theme/
 
 ## 🎨 Styling
 
-Tailwind CSS v4 drives all styling. Edit `src/css/tailwind.css` to add global layers or utilities, then rebuild with `npm run watch` or `npm run build`.
+Tailwind CSS 3 drives all styling. Edit `src/css/tailwind.css` to add global layers or utilities, then rebuild with `npm run watch` or `npm run build`.
 
 ## ✅ Requirements
 

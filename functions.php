@@ -16,23 +16,6 @@ if ( ! defined( 'BP_THEME_VERSION' ) ) {
 require_once get_template_directory() . '/inc/setup.php';
 require_once get_template_directory() . '/inc/enqueue.php';
 
-if ( ! function_exists( 'bp_get_part' ) ) {
-    /**
-     * Wrapper for get_template_part with optional arguments.
-     *
-     * @param string     $slug Template slug.
-     * @param string|null $name Optional. Template name.
-     * @param array      $args Optional. Arguments passed to the template.
-     */
-    function bp_get_part( $slug, $name = null, $args = array() ) {
-        if ( empty( $slug ) ) {
-            return;
-        }
-
-        get_template_part( $slug, $name, $args );
-    }
-}
-
 if ( ! function_exists( 'bp_fallback_menu' ) ) {
     /**
      * Fallback menu that lists top-level pages when no menu is assigned.
@@ -82,15 +65,3 @@ if ( ! function_exists( 'bp_fallback_menu' ) ) {
     }
 }
 
-$bp_modules = array(
-    'alpine'   => false,
-    'fancybox' => false,
-    'swiper'   => false,
-);
-
-/**
- * Allow plugins or child themes to filter module toggles.
- */
-$bp_modules = apply_filters( 'bp/modules', $bp_modules );
-
-$GLOBALS['BP_MODULES'] = $bp_modules;

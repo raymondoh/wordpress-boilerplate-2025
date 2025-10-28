@@ -1,6 +1,6 @@
 <?php
 /**
- * Enqueue theme styles, scripts, and optional modules.
+ * Enqueue theme styles and scripts.
  *
  * @package WordPress_Boilerplate_2025
  */
@@ -17,13 +17,20 @@ if ( ! function_exists( 'bp_enqueue_theme_assets' ) ) {
         $theme_dir = get_template_directory();
         $theme_uri = get_template_directory_uri();
 
+        wp_enqueue_style(
+            'bp-style',
+            get_stylesheet_uri(),
+            array(),
+            BP_THEME_VERSION
+        );
+
         $css_rel  = '/assets/css/main.css';
         $css_path = $theme_dir . $css_rel;
         if ( file_exists( $css_path ) ) {
             wp_enqueue_style(
                 'bp-main',
                 $theme_uri . $css_rel,
-                array(),
+                array( 'bp-style' ),
                 filemtime( $css_path )
             );
         }
@@ -43,60 +50,4 @@ if ( ! function_exists( 'bp_enqueue_theme_assets' ) ) {
 }
 add_action( 'wp_enqueue_scripts', 'bp_enqueue_theme_assets' );
 
-if ( ! function_exists( 'bp_enqueue_optional_modules' ) ) {
-    /**
-     * Conditionally load optional front-end modules via CDN.
-     */
-    function bp_enqueue_optional_modules() {
-        $modules = array();
 
-        if ( isset( $GLOBALS['BP_MODULES'] ) && is_array( $GLOBALS['BP_MODULES'] ) ) {
-            $modules = $GLOBALS['BP_MODULES'];
-        }
-
-        if ( ! empty( $modules['alpine'] ) ) {
-            wp_enqueue_script(
-                'alpinejs',
-                'https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js',
-                array(),
-                null,
-                true
-            );
-        }
-
-        if ( ! empty( $modules['fancybox'] ) ) {
-            wp_enqueue_style(
-                'fancybox',
-                'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css',
-                array(),
-                '5.0'
-            );
-
-            wp_enqueue_script(
-                'fancybox',
-                'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js',
-                array(),
-                '5.0',
-                true
-            );
-        }
-
-        if ( ! empty( $modules['swiper'] ) ) {
-            wp_enqueue_style(
-                'swiper',
-                'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css',
-                array(),
-                '10.0.0'
-            );
-
-            wp_enqueue_script(
-                'swiper',
-                'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js',
-                array(),
-                '10.0.0',
-                true
-            );
-        }
-    }
-}
-add_action( 'wp_enqueue_scripts', 'bp_enqueue_optional_modules', 20 );
