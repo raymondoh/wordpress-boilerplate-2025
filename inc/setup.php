@@ -60,3 +60,4 @@ if ( ! function_exists( 'bp_theme_body_class' ) ) {
     }
 }
 add_filter( 'body_class', 'bp_theme_body_class' );
+

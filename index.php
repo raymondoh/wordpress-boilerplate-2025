@@ -1,13 +1,19 @@
 <?php get_header(); ?>
 
 <main id="main" class="site-main container section" role="main">
-    <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-    <article <?php post_class('prose'); ?>>
-        <h1 class="mb-6"><?php the_title(); ?></h1>
-        <div class="entry-content"><?php the_content(); ?></div>
-    </article>
-    <?php endwhile; else : ?>
-    <p><?php esc_html_e('No posts found.', 'art-portfolio-theme'); ?></p>
+    <?php if ( have_posts() ) : ?>
+        <div class="space-y-12">
+            <?php
+            while ( have_posts() ) :
+                the_post();
+                get_template_part( 'template-parts/content/content' );
+            endwhile;
+            ?>
+        </div>
+
+        <?php the_posts_pagination( array( 'mid_size' => 2 ) ); ?>
+    <?php else : ?>
+        <?php get_template_part( 'template-parts/content', 'none' ); ?>
     <?php endif; ?>
 </main>
 

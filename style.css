@@ -10,3 +10,20 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: boilerplate
 Tags: boilerplate, tailwind, minimal
 */
+
+body {
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #111827;
+    background-color: #ffffff;
+    line-height: 1.6;
+}
+
+a {
+    color: #2563eb;
+}
+
+a:hover,
+a:focus {
+    color: #1d4ed8;
+}
+
